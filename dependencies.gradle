@@ -10,7 +10,7 @@ ext {
                     , "com.h2database:h2:1.4.195"
             ],
             mysql  : [
-                    "mysql:mysql-connector-java:5.1.29"
+            "mysql:mysql-connector-java:5.1.29"
             ],
             jsonrpc:[
                     "com.imooc.jsonrpc4j:jsonrpc4j:1.5.1"
