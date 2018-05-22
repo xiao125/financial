@@ -138,17 +138,30 @@ public class ProductService {
                 idList,minRewardRate, maxRewardRate, statusList, pageable);
 
         Specification<Product> specification = new Specification<Product>() {
+
+            /**
+             *
+             * @param root :代表的查询的实体类
+             * @param query ;可以从中得到Root对象，即告知JPA Criteria查询要查询哪一个实体类
+             *              还可以来添加查询条件，还可以结合EntityManager对象得到最终查询的TypedQuery 对象
+             * @param cb  :criteriabuildre对象，用于创建Criteria相关的对象工程，当然可以从中获取到predicate类型
+             * @return  代表一个查询条件
+             */
             @Override
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
-                Expression<String> idCol = root.get("id");
+
+                Expression<String> idCol = root.get("id"); //获取编号列
                 Expression<BigDecimal> rewardRateCol = root.get("rewardRate");
-                Expression<String> statusCol = root.get("status");
-                List<Predicate> predicates = new ArrayList<>();
+                Expression<String> statusCol = root.get("status"); //获取状态列
+                List<Predicate> predicates = new ArrayList<>(); //断言列表
                 if (idList !=null && idList.size() >0){
-                    predicates.add(idCol.in(idList)); //产品编号列表
+                    predicates.add(idCol.in(idList)); //(在这个产品列表里面进行产品编号条件查询)
                 }
                 if (minRewardRate !=null && BigDecimal.ZERO.compareTo(minRewardRate) <0){
+
+                    //
+                    //cb.gt(rewardRateCol,maxRewardRate); 表示：rewardRate 不为空且大于minRewardRate 条件
                     predicates.add(cb.ge(rewardRateCol,minRewardRate)); //最小收益率范围
                 }
                 if (maxRewardRate !=null && BigDecimal.ZERO.compareTo(maxRewardRate)<0){
@@ -158,6 +171,7 @@ public class ProductService {
                     predicates.add(statusCol.in(statusList));
                 }
 
+                //predicates.toArray(new Predicate[0]) : predicates 列表转换成数组，进行条件
                 query.where(predicates.toArray(new Predicate[0]));
                 return null;
             }
