@@ -1,5 +1,6 @@
 package com.imooc.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.persistence.Entity;
@@ -21,6 +22,8 @@ public class Product implements Serializable{
     /**
      * @see com.imooc.entity.enums.ProductStatus
      */
+    //Swagger 参数说明
+    @ApiModelProperty(value = "状态",dataType = "com.imooc.entity.enums.ProductStatus")
     private String status;
 
     //起投金额

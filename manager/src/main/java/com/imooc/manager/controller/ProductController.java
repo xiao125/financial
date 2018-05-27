@@ -2,6 +2,8 @@ package com.imooc.manager.controller;
 
 import com.imooc.entity.Product;
 import com.imooc.manager.service.ProductService;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+
+    //swagger 生成对应成接口说明
+    @ApiOperation(value = "创建产品",notes = "根据对应业务规则添加相应的产品")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public Product addProduct(@RequestBody Product product){
 
